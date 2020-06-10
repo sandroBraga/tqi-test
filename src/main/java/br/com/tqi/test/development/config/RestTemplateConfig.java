@@ -1,4 +1,4 @@
-package br.com.tqi.test.development;
+package br.com.tqi.test.development.config;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;

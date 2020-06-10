@@ -1,4 +1,4 @@
-package br.com.tqi.test.development;
+package br.com.tqi.test.development.swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket greetingApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.tqi.test.development"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.tqi.test.development.contoller"))
                 .build()
                 .apiInfo(metaData());
 

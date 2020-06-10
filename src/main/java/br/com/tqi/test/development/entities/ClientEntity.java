@@ -1,13 +1,15 @@
-package br.com.tqi.test.development;
+package br.com.tqi.test.development.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import br.com.tqi.test.development.dto.ClientDTO;
 
 @Entity
 @Table(name = "CLIENT")
@@ -27,19 +29,20 @@ public class ClientEntity {
     @Column(name = "sexo")
     private String sexo;
 
-    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "id_address", referencedColumnName = "id")
     private AddressEntity addressEntity;
 
     public ClientEntity() {
         super();
     }
 
-    public ClientEntity(ClientEntity clientEntity) {
-        this.id = clientEntity.getId();
-        this.cpf = clientEntity.getCpf();
-        this.nome = clientEntity.getNome();
-        this.sexo = clientEntity.getSexo();
-        this.addressEntity = null;
+    public ClientEntity(ClientDTO clientDTO) {
+        this.id = clientDTO.getId();
+        this.cpf = clientDTO.getCpf();
+        this.nome = clientDTO.getNome();
+        this.sexo = clientDTO.getSexo();
+        this.addressEntity = new AddressEntity(clientDTO.getAddress());
     }
 
     public ClientEntity(Long id) {

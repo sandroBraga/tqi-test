@@ -1,12 +1,24 @@
-package br.com.tqi.test.development;
+package br.com.tqi.test.development.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import br.com.tqi.test.development.dto.AddressDTO;
+import br.com.tqi.test.development.dto.ClientDTO;
+import br.com.tqi.test.development.entities.AddressEntity;
+import br.com.tqi.test.development.entities.ClientEntity;
+import br.com.tqi.test.development.repositories.AddressRepository;
+import br.com.tqi.test.development.repositories.ClientRepository;
 
 @Service
 public class TestService {
@@ -24,33 +36,44 @@ public class TestService {
         this.restTemplate = restTemplate;
     }
 
-    public ClientEntity saveNewClient(ClientEntity clientEntity) {
-        AddressEntity addressEntity = clientEntity.getAddressEntity();
-
-        ClientEntity newClient = clientRepository.save(new ClientEntity(clientEntity));
-
-        if (addressEntity.getId() == null) {
-            addressEntity.setClient(newClient);
-            addressRepository.save(addressEntity);
-        }
-
-        newClient.setAddressEntity(addressEntity);
+    public ClientEntity saveNewClient(ClientDTO clientDTO) {
+        ClientEntity newClient = clientRepository.save(new ClientEntity(clientDTO));
 
         return newClient;
     }
+    
+    public List<ClientDTO> getAllClients() {
+    	return clientRepository.findAll().stream().map(ClientDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+    public ClientDTO getClientById(Long clientId) throws IllegalArgumentException {
+    	try {    		
+    		Optional<ClientEntity> clientEntity = clientRepository.findById(clientId);
+    		if(clientEntity.isPresent()) {
+    			return new ClientDTO(clientEntity.get());
+    		}
+    	} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException();
+		}
+		return null;
+    }
 
-    public void changeClientAddress(Long idClient, Long idAddress, AddressEntity addressEntity) throws Exception {
-        ClientEntity clientEntity = clientRepository.findById(idClient).get();
-
-        AddressEntity actualAddress = addressRepository.findById(idAddress).get();
-
-        if (actualAddress.getClient().equals(idClient)) {
-            throw new Exception("Endereço de outro cliente");
+    public int changeClientAddress(Long idClient, AddressDTO addressDTO) throws Exception {
+        AddressEntity actualAddress = null;
+        Optional<ClientEntity> clientEntity = clientRepository.findById(idClient);
+        
+        if(clientEntity.isPresent() && clientEntity.get().getAddressEntity() != null) {
+        	actualAddress = addressRepository.findById(clientEntity.get().getAddressEntity().getId()).get();
         }
+        
+        if (!actualAddress.getClient().getId().equals(idClient)) {
+        	return 406;
+        }
+        
+        addressRepository.save(new AddressEntity(addressDTO));
+		return 200;
 
-        addressEntity.setId(actualAddress.getId());
-
-        addressRepository.save(addressEntity);
     }
 
     public AddressEntity getAddressByCep(String cep) throws JsonProcessingException {
