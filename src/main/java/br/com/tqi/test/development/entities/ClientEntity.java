@@ -1,5 +1,6 @@
 package br.com.tqi.test.development.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import br.com.tqi.test.development.dto.ClientDTO;
 
 @Entity
@@ -29,7 +29,7 @@ public class ClientEntity {
     @Column(name = "sexo")
     private String sexo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address", referencedColumnName = "id")
     private AddressEntity addressEntity;
 
@@ -38,7 +38,6 @@ public class ClientEntity {
     }
 
     public ClientEntity(ClientDTO clientDTO) {
-        this.id = clientDTO.getId();
         this.cpf = clientDTO.getCpf();
         this.nome = clientDTO.getNome();
         this.sexo = clientDTO.getSexo();

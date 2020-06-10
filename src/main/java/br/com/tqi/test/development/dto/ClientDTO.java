@@ -20,15 +20,8 @@ public class ClientDTO implements Serializable {
 		this.id = clientEntity.getId();
 		this.nome = clientEntity.getNome();
 		this.sexo = clientEntity.getSexo();
+		this.cpf = clientEntity.getCpf();
 		this.address = new AddressDTO(clientEntity.getAddressEntity());
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -55,6 +48,15 @@ public class ClientDTO implements Serializable {
 	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	
 	
 }

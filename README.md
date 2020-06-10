@@ -8,22 +8,26 @@
   	
 # Alterações
 
-##Estruturais
+## Estruturais
 
 - Criação de pacotes para separar responsabilidades
 - Alocação de classes em seus respectivos pacotes
 
-##Validacionais
+## Validacionais
 
 - Inclusão de @NotNull nas propriedades obrigatórias
 - Validação de retornos da API
 
-##Código
+## Código
 
 - Criação de DTO's (Data transfer object) para evitar de usar as Entities mapeadas do banco
 - Refatoração dos métodos `getAllClients()` e `getClientById()` que utilizavam as classes repositories na classe controller
 - Validação dos dados na rota de `/client/change-address/{id}` assim como na validação dos endereços
 
-##Banco
+## Banco
 
-- A relação entre as tabelas foi invertida, de como que o `CLIENT` possua a informação do `ADDRESS` 
+- A relação entre as tabelas foi invertida, de modo que o `CLIENT` possua a informação do `ADDRESS` 
+
+## Trivia
+
+- Escrevi dois casos de testes

@@ -1,6 +1,7 @@
 package br.com.tqi.test.development.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import br.com.tqi.test.development.dto.AddressDTO;
 import br.com.tqi.test.development.dto.ClientDTO;
 import br.com.tqi.test.development.entities.AddressEntity;
-import br.com.tqi.test.development.entities.ClientEntity;
 import br.com.tqi.test.development.services.TestService;
 
 @RestController
@@ -40,7 +42,7 @@ public class TestController {
     }
 
     @PostMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClientEntity> saveNewClient(@RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDTO> saveNewClient(@RequestBody ClientDTO clientDTO) {
         return ResponseEntity.ok(testService.saveNewClient(clientDTO));
     }
 

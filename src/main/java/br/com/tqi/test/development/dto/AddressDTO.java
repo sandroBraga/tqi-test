@@ -31,14 +31,6 @@ public class AddressDTO implements Serializable {
 		this.pais = addressEntity.getPais();
 		this.cep = addressEntity.getCidade();
 	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getEndereco() {
 		return endereco;
@@ -102,6 +94,14 @@ public class AddressDTO implements Serializable {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

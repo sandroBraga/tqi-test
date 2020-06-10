@@ -30,6 +30,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
     compile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
     compile('io.springfox:springfox-swagger2:2.9.2')
     compile('io.springfox:springfox-swagger-ui:2.9.2')

@@ -36,10 +36,10 @@ public class TestService {
         this.restTemplate = restTemplate;
     }
 
-    public ClientEntity saveNewClient(ClientDTO clientDTO) {
+    public ClientDTO saveNewClient(ClientDTO clientDTO) {
         ClientEntity newClient = clientRepository.save(new ClientEntity(clientDTO));
 
-        return newClient;
+        return new ClientDTO(newClient);
     }
     
     public List<ClientDTO> getAllClients() {
@@ -48,7 +48,7 @@ public class TestService {
     }
     
     public ClientDTO getClientById(Long clientId) throws IllegalArgumentException {
-    	try {    		
+    	try {
     		Optional<ClientEntity> clientEntity = clientRepository.findById(clientId);
     		if(clientEntity.isPresent()) {
     			return new ClientDTO(clientEntity.get());
